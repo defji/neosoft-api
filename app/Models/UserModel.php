@@ -2,31 +2,27 @@
 
 namespace NeosoftApi\Models;
 
+
+use NeosoftApi\Database\Database;
+use PDO;
+
 class UserModel
 {
-    private $users = [
-        ['id' => 1, 'username' => 'user1', 'password' => 'password1'],
-        ['id' => 2, 'username' => 'user2', 'password' => 'password2'],
-    ];
+
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = new Database();
+    }
+
 
     public function getUserById($id)
     {
-        foreach ($this->users as $user) {
-            if ($user['id'] == $id) {
-                return $user;
-            }
-        }
-        return null;
-    }
 
-    public function getUserByUsername($username)
-    {
-        foreach ($this->users as $user) {
-            if ($user['username'] == $username) {
-                return $user;
-            }
-        }
-        return null;
+        $query = "SELECT * FROM users where id={$id}";
+        $statement = $this->db->query($query);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

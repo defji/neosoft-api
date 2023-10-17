@@ -2,19 +2,22 @@
 
 namespace NeosoftApi\Controllers;
 
+use NeosoftApi\Models\UserModel;
+
 
 class UserController
 {
     private $userModel;
 
-//    public function __construct($userModel)
-//    {
-//        $this->userModel = $userModel;
-//    }
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+    }
 
 
     public function getUsers()
     {
+        var_dump($this->userModel->getUserById(1));
     }
 
     public function login($username, $password)
