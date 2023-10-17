@@ -1,0 +1,17 @@
+{
+  "name": "dfj/neosoft-api",
+  "description": "Neosoft API Application",
+  "type": "project",
+  "require": {
+    "php": "^7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "NeosoftApi\\": "app/",
+      "NeosoftApi\\Router\\": "app/router/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  }
+}
