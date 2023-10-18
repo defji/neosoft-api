@@ -2,7 +2,6 @@
 
 ini_set('display_errors', true);
 
-// Inicializálás és Composer autoload betöltése
 require_once '../vendor/autoload.php';
 
 use NeosoftApi\Router\Router;
