@@ -6,11 +6,11 @@ namespace NeosoftApi\Database;
 use PDO;
 use PDOException;
 
-const DB_HOST = 'localhost';
-const DB_NAME = 'neo';
-const DB_PASSWORD = 'plokplok4';
-const DB_USER = 'root';
-
+//const DB_HOST = 'localhost';
+//const DB_NAME = 'neo';
+//const DB_PASSWORD = 'plokplok4';
+//const DB_USER = 'root';
+//
 
 class Database
 {
