@@ -8,6 +8,9 @@
     "ext-http": "*"
   },
   "autoload": {
+    "files": [
+      "config/"
+    ],
     "psr-4": {
       "NeosoftApi\\": "app/",
       "NeosoftApi\\Router\\": "app/router/"
