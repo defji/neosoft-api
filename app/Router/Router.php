@@ -2,13 +2,20 @@
 
 namespace NeosoftApi\Router;
 
-// router/Router.php
+
 use NeosoftApi\Controllers\UserController;
 
 class Router
 {
     private $routes = [];
 
+    /**
+     * Adding endpoints to router
+     * @param $method
+     * @param $path
+     * @param $controller
+     * @return void
+     */
     public function addRoute($method, $path, $controller)
     {
         $this->routes[] = [
@@ -18,6 +25,9 @@ class Router
         ];
     }
 
+    /**
+     * @return void
+     */
     public function route()
     {
         $method = $_SERVER['REQUEST_METHOD'];
@@ -26,7 +36,6 @@ class Router
         foreach ($this->routes as $route) {
             if ($route['method'] === $method && $route['path'] === $path) {
                 [$controllerName, $methodName] = explode('@', $route['controller']);
-
                 $controllerClass = 'NeosoftApi\Controllers\\'.$controllerName;
                 $controller = new $controllerClass();
                 $controller->$methodName();
