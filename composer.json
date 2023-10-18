@@ -9,7 +9,7 @@
   },
   "autoload": {
     "files": [
-      "config/"
+      "config/database.php"
     ],
     "psr-4": {
       "NeosoftApi\\": "app/",

@@ -7,7 +7,7 @@ The task was to create a rest api, without any php framework.
 ```bash
 git clone git@github.com:defji/neosoft-api.git
 composer install
-# set database credentials on app/Database/Database.php
+# set database credentials on config/database.php
 # import database/database.sql 
 composer install
 php -S localhost:8000 -t public
