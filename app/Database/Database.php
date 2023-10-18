@@ -28,8 +28,13 @@ class Database
 
     public function query($query, $params = [])
     {
-        $statement = $this->db->prepare($query);
-        $statement->execute($params);
-        return $statement;
+        $stmt = $this->db->prepare($query);
+        foreach ($params as $param => $value) {
+            $stmt->bindParam($param, $value);
+        }
+        $stmt->execute();
+        var_dump($stmt);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
     }
 }
