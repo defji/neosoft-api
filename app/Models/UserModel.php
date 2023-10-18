@@ -20,27 +20,42 @@ class UserModel
     }
 
 
-    public function authUser($username, $password): array
+    public function getAllUser()
+    {
+        $query = "select * from users";
+        return $this->db->query($query, []);
+    }
+
+
+    public function authUser($username, $password): ?string
     {
         $encryptedPassword = sha1(PW_SALT.$password);
-        $query = "SELECT * FROM users where username=:username and password=:password";
+        $query = "select * from users where username='{$username}' and password='{$encryptedPassword}'";
+        $user = $this->db->query($query, [])[0] ?? null;
+        if ($user) {
+            return $this->saveToken($user, $this->generateToken());
+        }
+        return null;
+    }
 
-        $user = $this->db->query($query, [
-            'username' => $username,
-            'password' => $encryptedPassword,
-        ]);
-        var_dump($user);
-//        $this->saveToken($user, $this->generateToken());
-
-
-        return $user;
+    /**
+     * Check token is valid
+     * @param $token
+     * @return bool
+     */
+    public function getUserByToken($token): bool
+    {
+        $query = "select * from users where auth_token='{$token}'";
+        $user = $this->db->query($query, [])[0] ?? null;
+        return is_array($user);
     }
 
     private function saveToken(array $user, string $token)
     {
-//        $query = "update users set token='{$token}'  where id={$user['id']}"";
-//        $statement = $this->db->query($query);
-
+        $id = $user['id'];
+        $query = "update users set auth_token='{$token}'  where id={$id}";
+        $statement = $this->db->query($query);
+        return $token;
     }
 
 
@@ -54,10 +69,28 @@ class UserModel
     }
 
 
+    /**
+     * Generate auth token
+     * @return string
+     * @throws \Exception
+     */
     private function generateToken()
     {
         return bin2hex(random_bytes(64));
     }
+
+    /**
+     * Removing sensitive data from user
+     * @param $user
+     * @return array
+     */
+    public static function outputFormatter($user): array
+    {
+        unset($user['password']);
+        unset($user['auth_token']);
+        return $user;
+    }
+
 
 }
 

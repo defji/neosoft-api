@@ -35,6 +35,6 @@ class Router
         }
 
         http_response_code(404);
-        echo "Nem található ilyen végpont.";
+        echo "Endpoint not found.";
     }
 }

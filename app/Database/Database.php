@@ -29,12 +29,13 @@ class Database
     public function query($query, $params = [])
     {
         $stmt = $this->db->prepare($query);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         foreach ($params as $param => $value) {
+            $type = ($value === intval($value)) ? PDO::PARAM_INT : PDO::PARAM_STR;
             $stmt->bindParam($param, $value);
         }
         $stmt->execute();
-        var_dump($stmt);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $results;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

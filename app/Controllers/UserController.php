@@ -5,60 +5,53 @@ namespace NeosoftApi\Controllers;
 use NeosoftApi\Models\UserModel;
 
 
-class UserController
+class UserController extends Controller
 {
 
-    private $userModel;
-    private $postParams;
+    private UserModel $userModel;
 
     public function __construct()
     {
+        parent::__construct();
         $this->userModel = new UserModel();
-        $this->postParams = json_decode(file_get_contents('php://input'), true);
 
     }
 
-
+    /**
+     * @return void
+     */
     public function authUser()
     {
         $username = isset($this->postParams['username']) ? $this->postParams['username'] : null;
         $password = isset($this->postParams['password']) ? $this->postParams['password'] : null;
 
         if ($username && $password) {
-            $user = $this->userModel->authUser($username, $password);
-            var_dump($user);
-
+            $token = $this->userModel->authUser($username, $password);
+            if ($token) {
+                $this->response(['token' => $token]);
+            } else {
+                $this->response("Invalid credentials", 422);
+            }
         } else {
-            http_send_status(422);
-            print "Unprocasseble login credentials.";
+            $this->response("Missing login credentials", 422);
         }
     }
 
 
-    public
-    function getUsers()
+    /**
+     * Get all users, protected by user token!
+     * @return void
+     */
+    public function getUsers()
     {
-        var_dump($this->userModel->getUserById(1));
-    }
-
-    public
-    function login(
-        $username,
-        $password
-    ) {
-        $user = $this->userModel->getUserByUsername($username);
-        if ($user && $user['password'] === $password) {
-            // Sikeres bejelentkezés, például szerepkör ellenőrzése és munkamenetkezelés
-            session_start();
-            $_SESSION['user'] = $user;
-            // További műveletek, például átirányítás
+        if ($this->checkAuthToken($this->userModel)) {
+            $format = function (array $user): array {
+                $user = $this->userModel::outputFormatter($user);
+                return $user;
+            };
+            $this->response(array_map($format, $this->userModel->getAllUser()));
         } else {
-            // Sikertelen bejelentkezés, hibaüzenet és visszatérés a bejelentkező oldalra
-            echo "Sikertelen bejelentkezés";
-            // További műveletek, például átirányítás
+            $this->response('Missing or invalid Bearer token!', 401);
         }
     }
-
-
 }
-
