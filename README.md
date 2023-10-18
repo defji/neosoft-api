@@ -29,16 +29,41 @@ Accept: application/json
 
 response will be:
 
-````
-{"token":"aadb1ce8e10739f51866c181b4c9cbd4fef6b027ad72460a2e13d7a1aae4b82917d308e962475d5a9ca08bf21286db6c5157780ee20224dec81866bb7463ae9d"}
+````json
+{
+  "token": "aadb1ce8e10739f51866c181b4c9cbd4fef6b027ad72460a2e13d7a1aae4b82917d308e962475d5a9ca08bf21286db6c5157780ee20224dec81866bb7463ae9d"
+}
 ````
 
 - api/users  (accessible via bearer token)
 
 ```http request
-
+GET http://127.0.0.1:8000/api/users HTTP/1.1
+Authorization: Bearer aadb1ce8e10739f51866c181b4c9cbd4fef6b027ad72460a2e13d7a1aae4b82917d308e962475d5a9ca08bf21286db6c5157780ee20224dec81866bb7463ae9d
 ```
 
+response will be:
+
+```json
+[
+  {
+    "id": 2,
+    "first_name": "Jakab",
+    "last_name": "Teszt",
+    "username": "user",
+    "email": "user@example.com",
+    "date_of_birth": "1980-01-01",
+    "zip": "1000",
+    "city": "Budapest",
+    "address": "Clark Ádám tér 1. "
+  },
+  {
+    ...
+  }
+]
+```
+
+Or use included postman collection 
 
 
 
