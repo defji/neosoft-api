@@ -49,7 +49,7 @@ class UserController extends Controller
                 $user = $this->userModel::outputFormatter($user);
                 return $user;
             };
-            $this->response(array_map($format, $this->userModel->getAllUser()));
+            $this->response(["users" => array_map($format, $this->userModel->getAllUser())]);
         } else {
             $this->response('Missing or invalid Bearer token!', 401);
         }
