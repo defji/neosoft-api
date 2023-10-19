@@ -8,17 +8,13 @@ use PDO;
 
 const PW_SALT = 'neosoft';
 
-class UserModel
+class UserModel extends Model
 {
-
-
-    private $db;
 
     public function __construct()
     {
-        $this->db = new Database();
+        parent::__construct();
     }
-
 
     public function getAllUser()
     {
