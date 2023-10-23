@@ -24,7 +24,7 @@ Accept: application/json
     {
       "username": "user",
       "password": "supersecret"
-    },
+    }
 ```
 
 response will be:
