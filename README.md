@@ -63,7 +63,7 @@ response will be:
 ]
 ```
 
-Or use included postman collection 
+Or use included postman collection 😎
 
 
 
